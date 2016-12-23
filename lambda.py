@@ -97,12 +97,18 @@ def create_favorite_color_attributes(favorite_color):
 def play_note(intent, session):
     card_title = intent['name']
     session_attributes = {}
-    should_end_session = False
 
 
-    if 'Note' in intent['slots']:
-        note_to_play = intent['slots']['Note']['value']
-        output_note = generate_note_sound(note_to_play)
+    #if 'Note' in intent['slots']:
+    #    note_to_play = intent['slots']['Note']['value']
+    #    output_note = generate_note_sound(note_to_play)
+    
+    title = "Note playing."
+    begin_output = "Here is your note: "
+    audio_url = note_a()
+    end_output = ""
+    reprompt_text = None
+    should_end_session = True
 
     return build_response(session_attributes, build_audio_response(
         title,  begin_output, audio_url, end_output, reprompt_text, should_end_session))
@@ -213,7 +219,7 @@ def on_session_ended(session_ended_request, session):
 #----------------Audio files
 # ADDED ADDED ADDED
 def note_a():
-    return "https://www.github.com/k4therin2/MusiciansAssistant/audio/a.mp3"
+    return "http://www.violinonline.com/sound/tuning/A-0.mp3"
 
 
 
