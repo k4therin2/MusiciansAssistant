@@ -1,0 +1,8 @@
+Custom Slot type name: Notes
+
+Values:
+
+E
+A
+D
+G

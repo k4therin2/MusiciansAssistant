@@ -1,0 +1,19 @@
+{
+    "intents": [
+        {
+            "intent": "AMAZON.PauseIntent"
+        },
+        {
+            "intent": "AMAZON.ResumeIntent"
+        },
+      {
+        "intent": "PlayNoteIntent",
+        "slots" : [
+          {
+            "name": "Note",
+            "type": "Notes"
+          }
+        ]
+      }
+    ]
+}
