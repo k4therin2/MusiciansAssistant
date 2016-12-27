@@ -26,7 +26,7 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         'reprompt': {
             'outputSpeech': {
                 'type': 'PlainText',
-                'text': reprompt_text
+                'text': reprompt_texth
             }
         },
         'shouldEndSession': should_end_session
@@ -45,7 +45,7 @@ def build_audio_response(title, begin_output, audio_url, end_output, reprompt_te
         'outputSpeech': {
             'type': 'SSML',
             'ssml': '<speak>' + begin_output + '<audio src="' + audio_url + '"/>' + end_output + '</speak>'
-        },
+            },
         'card': {
             'type': 'Simple',
             'title': title,
@@ -219,7 +219,13 @@ def on_session_ended(session_ended_request, session):
 #----------------Audio files
 # ADDED ADDED ADDED
 def note_a():
-    return "http://www.violinonline.com/sound/tuning/A-0.mp3"
+    return "https://s3.amazonaws.com/musiciansassistant/a_440.mp3"
+def note_d():
+    return "https://s3.amazonaws.com/musiciansassistant/d_293_7.mp3"
+def note_g():
+    return "https://s3.amazonaws.com/musiciansassistant/a440.mp3"
+def note_e():
+    return "https://s3.amazonaws.com/musiciansassistant/a440.mp3"
 
 
 
