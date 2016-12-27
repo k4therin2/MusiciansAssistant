@@ -223,9 +223,9 @@ def note_a():
 def note_d():
     return "https://s3.amazonaws.com/musiciansassistant/d_293_7.mp3"
 def note_g():
-    return "https://s3.amazonaws.com/musiciansassistant/a440.mp3"
+    return "https://s3.amazonaws.com/musiciansassistant/g_196.mp3"
 def note_e():
-    return "https://s3.amazonaws.com/musiciansassistant/a440.mp3"
+    return "https://s3.amazonaws.com/musiciansassistant/e_659_3.mp3"
 
 
 
