@@ -90,10 +90,6 @@ def handle_session_end_request():
     return build_response({}, build_speechlet_response(
         card_title, speech_output, None, should_end_session))
 
-
-def create_favorite_color_attributes(note):
-    return {"Note": note}
-
 def play_note(intent, session):
     card_title = intent['name']
     session_attributes = {}
@@ -103,7 +99,7 @@ def play_note(intent, session):
         output_note = get_note_url(note_to_play)
     
     title = "Note playing."
-    begin_output = "Here is your note: "
+    begin_output = "Here is your note. "
     audio_url = output_note
     end_output = ""
     reprompt_text = None
@@ -119,53 +115,11 @@ def get_note_url(note_to_play):
         return note_d()
     elif note_to_play == "g" or note_to_play == "ge" or note_to_play == "jean":
         return note_g()
-    elif note_to_play == "e" or note_to_play == "need":
+    elif note_to_play == "e" or note_to_play == "need" or note_to_play == "and i" or note_to_play == "I":
         return note_e()
     else:
-        raise ValueError("Invalid intent")
+        raise ValueError('Invalid note, "'+ note_to_play +'"')
 
-def set_note_in_session(intent, session):
-    """ Sets the color in the session and prepares the speech to reply to the
-    user.
-    """
-    card_title = intent['name']
-    session_attributes = {}
-    should_end_session = False
-
-    if 'Notes' in intent['slots']:
-        note = intent['slots']['Notes']['value']
-        session_attributes = create_favorite_color_attributes(note)
-        speech_output = ""
-        reprompt_text = ""
-    else:
-        speech_output = "I'm not sure what your favorite color is. " \
-                        "Please try again."
-        reprompt_text = "I'm not sure what your favorite color is. " \
-                        "You can tell me your favorite color by saying, " \
-                        "my favorite color is red."
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
-
-
-def get_note_from_session(intent, session):
-    session_attributes = {}
-    reprompt_text = None
-
-    if session.get('attributes', {}) and "Note" in session.get('attributes', {}):
-        note = session['attributes']['Note']
-        speech_output = "Your favorite color is " + note + \
-                        ". Goodbye."
-        should_end_session = True
-    else:
-        speech_output = "I'm not sure what your favorite color is. " \
-                        "You can say, my favorite color is red."
-        should_end_session = False
-
-    # Setting reprompt_text to None signifies that we do not want to reprompt
-    # the user. If the user does not respond or says something that is not
-    # understood, the session will end.
-    return build_response(session_attributes, build_speechlet_response(
-        intent['name'], speech_output, reprompt_text, should_end_session))
 
 
 # --------------- Events ------------------
