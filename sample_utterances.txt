@@ -2,6 +2,8 @@ PlayNoteIntent play an {Note}
 PlayNoteIntent play a {Note}
 PlayNoteIntent play n. {Note}
 PlayNoteIntent play in {Note}
+PlayNoteIntent play i {Note}
+PlayNoteIntent play m {Note}
 PlayNoteIntent give me a {Note}
 PlayNoteIntent give me an {Note}
 PlayNoteIntent can you give me a {Note}

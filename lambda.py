@@ -113,13 +113,13 @@ def play_note(intent, session):
         title,  begin_output, audio_url, end_output, reprompt_text, should_end_session))
 
 def get_note_url(note_to_play):
-    if note_to_play == "a":
+    if note_to_play == "a" or note_to_play == "egg":
         return note_a()
-    elif note_to_play == "d":
+    elif note_to_play == "d" or note_to_play == "die":
         return note_d()
-    elif note_to_play == "g":
+    elif note_to_play == "g" or note_to_play == "ge" or note_to_play == "jean":
         return note_g()
-    elif note_to_play == "e":
+    elif note_to_play == "e" or note_to_play == "need":
         return note_e()
     else:
         raise ValueError("Invalid intent")
