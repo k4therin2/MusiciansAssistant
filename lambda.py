@@ -26,7 +26,7 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         'reprompt': {
             'outputSpeech': {
                 'type': 'PlainText',
-                'text': reprompt_texth
+                'text': reprompt_text
             }
         },
         'shouldEndSession': should_end_session
@@ -250,7 +250,6 @@ def lambda_handler(event, context):
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
                            event['session'])
-
     if event['request']['type'] == "LaunchRequest":
         return on_launch(event['request'], event['session'])
     elif event['request']['type'] == "IntentRequest":
