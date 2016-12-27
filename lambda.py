@@ -91,21 +91,20 @@ def handle_session_end_request():
         card_title, speech_output, None, should_end_session))
 
 
-def create_favorite_color_attributes(favorite_color):
-    return {"favoriteColor": favorite_color}
+def create_favorite_color_attributes(note):
+    return {"Note": note}
 
 def play_note(intent, session):
     card_title = intent['name']
     session_attributes = {}
 
-
-    #if 'Note' in intent['slots']:
-    #    note_to_play = intent['slots']['Note']['value']
-    #    output_note = generate_note_sound(note_to_play)
+    if 'Note' in intent['slots']:
+        note_to_play = intent['slots']['Note']['value']
+        output_note = get_note_url(note_to_play)
     
     title = "Note playing."
     begin_output = "Here is your note: "
-    audio_url = note_a()
+    audio_url = output_note
     end_output = ""
     reprompt_text = None
     should_end_session = True
@@ -113,25 +112,31 @@ def play_note(intent, session):
     return build_response(session_attributes, build_audio_response(
         title,  begin_output, audio_url, end_output, reprompt_text, should_end_session))
 
+def get_note_url(note_to_play):
+    if note_to_play == "a":
+        return note_a()
+    elif note_to_play == "d":
+        return note_d()
+    elif note_to_play == "g":
+        return note_g()
+    elif note_to_play == "e":
+        return note_e()
+    else:
+        raise ValueError("Invalid intent")
 
-def set_color_in_session(intent, session):
+def set_note_in_session(intent, session):
     """ Sets the color in the session and prepares the speech to reply to the
     user.
     """
-
     card_title = intent['name']
     session_attributes = {}
     should_end_session = False
 
-    if 'Color' in intent['slots']:
-        favorite_color = intent['slots']['Color']['value']
-        session_attributes = create_favorite_color_attributes(favorite_color)
-        speech_output = "I now know your favorite color is " + \
-                        favorite_color + \
-                        ". You can ask me your favorite color by saying, " \
-                        "what's my favorite color?"
-        reprompt_text = "You can ask me your favorite color by saying, " \
-                        "what's my favorite color?"
+    if 'Notes' in intent['slots']:
+        note = intent['slots']['Notes']['value']
+        session_attributes = create_favorite_color_attributes(note)
+        speech_output = ""
+        reprompt_text = ""
     else:
         speech_output = "I'm not sure what your favorite color is. " \
                         "Please try again."
@@ -142,13 +147,13 @@ def set_color_in_session(intent, session):
         card_title, speech_output, reprompt_text, should_end_session))
 
 
-def get_color_from_session(intent, session):
+def get_note_from_session(intent, session):
     session_attributes = {}
     reprompt_text = None
 
-    if session.get('attributes', {}) and "favoriteColor" in session.get('attributes', {}):
-        favorite_color = session['attributes']['favoriteColor']
-        speech_output = "Your favorite color is " + favorite_color + \
+    if session.get('attributes', {}) and "Note" in session.get('attributes', {}):
+        note = session['attributes']['Note']
+        speech_output = "Your favorite color is " + note + \
                         ". Goodbye."
         should_end_session = True
     else:
@@ -176,7 +181,6 @@ def on_launch(launch_request, session):
     """ Called when the user launches the skill without specifying what they
     want
     """
-
     print("on_launch requestId=" + launch_request['requestId'] +
           ", sessionId=" + session['sessionId'])
     # Dispatch to your skill's launch
@@ -195,10 +199,6 @@ def on_intent(intent_request, session):
     # Dispatch to your skill's intent handlers
     if intent_name == "PlayNoteIntent":
         return play_note(intent, session)
-    if intent_name == "MyColorIsIntent":
-        return set_color_in_session(intent, session)
-    elif intent_name == "WhatsMyColorIntent":
-        return get_color_from_session(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
@@ -217,7 +217,6 @@ def on_session_ended(session_ended_request, session):
     # add cleanup logic here
 
 #----------------Audio files
-# ADDED ADDED ADDED
 def note_a():
     return "https://s3.amazonaws.com/musiciansassistant/a_440.mp3"
 def note_d():
@@ -226,7 +225,6 @@ def note_g():
     return "https://s3.amazonaws.com/musiciansassistant/g_196.mp3"
 def note_e():
     return "https://s3.amazonaws.com/musiciansassistant/e_659_3.mp3"
-
 
 
 # --------------- Main handler ------------------
